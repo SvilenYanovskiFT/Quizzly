@@ -1,0 +1,48 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="quizRezult">
+      <h2 data-cy="quizRezultDetailsHeading"><span>Quiz Rezult</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ quizRezult.id }}</span>
+        </dd>
+        <dt><span>Score</span></dt>
+        <dd>
+          <span>{{ quizRezult.score }}</span>
+        </dd>
+        <dt><span>Rank</span></dt>
+        <dd>
+          <span>{{ quizRezult.rank }}</span>
+        </dd>
+        <dt><span>Quiz</span></dt>
+        <dd>
+          <div *ngIf="quizRezult.quiz">
+            <a [routerLink]="['/quiz', quizRezult.quiz?.id, 'view']">{{ quizRezult.quiz?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Quiz Rezult</span></dt>
+        <dd>
+          <div *ngIf="quizRezult.quizRezult">
+            <a [routerLink]="['/user-account', quizRezult.quizRezult?.id, 'view']">{{ quizRezult.quizRezult?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/quiz-rezult', quizRezult.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+
+entity Question {
+	sortOrder Long
+	text String,
+    image String,
+    answerA String,
+    answerB String,
+    answerC String,
+    answerD String,
+    correctAnswer AnswerCode,
+    timeLimit Long
+}
+
+enum AnswerCode {
+	A, B, C, D
+}
+
+entity Quiz {
+	name String,
+    code String,
+    quizType QuizType
+}
+
+enum QuizType {
+	GROUP, PERSONAL
+}
+
+entity UserAccount {
+	rank Long,
+    quizesTaken Long,
+    quizzesCreated Long
+}
+
+entity QuestionAnswer {
+	timeTaken Long,
+    success Boolean,
+    answer AnswerCode
+}
+
+entity QuizRezult {
+	score Long,
+    rank Long
+}
+
+relationship OneToMany {
+	Quiz to Question{quiz},
+    Question to QuestionAnswer{question},
+    UserAccount to QuestionAnswer{participant},
+    UserAccount to Quiz{owner},
+    Quiz to QuizRezult{quiz},
+    QuizRezult to QuestionAnswer{rezult},
+    UserAccount to QuizRezult{quizRezult}
+}
+
+relationship OneToOne {
+	UserAccount{user(login)} to User
+}
+
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl

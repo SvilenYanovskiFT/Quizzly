@@ -1,0 +1,55 @@
+{
+  "name": "UserAccount",
+  "fields": [
+    {
+      "fieldName": "rank",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "quizesTaken",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "quizzesCreated",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "user",
+      "otherEntityField": "login",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "questionAnswer",
+      "otherEntityRelationshipName": "participant",
+      "relationshipName": "questionAnswer"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "quiz",
+      "otherEntityRelationshipName": "owner",
+      "relationshipName": "quiz"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "quizRezult",
+      "otherEntityRelationshipName": "quizRezult",
+      "relationshipName": "quizRezult"
+    }
+  ],
+  "entityTableName": "user_account",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210423182054"
+}

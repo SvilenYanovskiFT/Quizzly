@@ -1,0 +1,92 @@
+<div>
+  <h2 id="page-heading" data-cy="QuizRezultHeading">
+    <span>Quiz Rezults</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-quiz-rezult"
+        [routerLink]="['/quiz-rezult/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Quiz Rezult </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="quizRezults?.length === 0">
+    <span>No quizRezults found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="quizRezults && quizRezults.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Score</span></th>
+          <th scope="col"><span>Rank</span></th>
+          <th scope="col"><span>Quiz</span></th>
+          <th scope="col"><span>Quiz Rezult</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let quizRezult of quizRezults; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/quiz-rezult', quizRezult.id, 'view']">{{ quizRezult.id }}</a>
+          </td>
+          <td>{{ quizRezult.score }}</td>
+          <td>{{ quizRezult.rank }}</td>
+          <td>
+            <div *ngIf="quizRezult.quiz">
+              <a [routerLink]="['/quiz', quizRezult.quiz?.id, 'view']">{{ quizRezult.quiz?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="quizRezult.quizRezult">
+              <a [routerLink]="['/user-account', quizRezult.quizRezult?.id, 'view']">{{ quizRezult.quizRezult?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/quiz-rezult', quizRezult.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/quiz-rezult', quizRezult.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(quizRezult)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+{
+  "name": "Quiz",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "quizType",
+      "fieldType": "QuizType",
+      "fieldValues": "GROUP,PERSONAL"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "question",
+      "otherEntityRelationshipName": "quiz",
+      "relationshipName": "question"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "quizRezult",
+      "otherEntityRelationshipName": "quiz",
+      "relationshipName": "quizRezult"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "quiz",
+      "relationshipName": "owner"
+    }
+  ],
+  "entityTableName": "quiz",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210423182053"
+}
