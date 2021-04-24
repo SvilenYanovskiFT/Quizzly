@@ -7,6 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 
 import { IQuiz, Quiz } from '../quiz.model';
 import { QuizService } from '../service/quiz.service';
+import { IQuestion } from 'app/entities/question/question.model';
+import { QuestionService } from 'app/entities/question/service/question.service';
 import { IUserAccount } from 'app/entities/user-account/user-account.model';
 import { UserAccountService } from 'app/entities/user-account/service/user-account.service';
 
@@ -17,6 +19,7 @@ import { UserAccountService } from 'app/entities/user-account/service/user-accou
 export class QuizUpdateComponent implements OnInit {
   isSaving = false;
 
+  questionsSharedCollection: IQuestion[] = [];
   userAccountsSharedCollection: IUserAccount[] = [];
 
   editForm = this.fb.group({
@@ -24,11 +27,13 @@ export class QuizUpdateComponent implements OnInit {
     name: [],
     code: [],
     quizType: [],
+    questions: [],
     owner: [],
   });
 
   constructor(
     protected quizService: QuizService,
+    protected questionService: QuestionService,
     protected userAccountService: UserAccountService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
@@ -56,8 +61,23 @@ export class QuizUpdateComponent implements OnInit {
     }
   }
 
+  trackQuestionById(index: number, item: IQuestion): number {
+    return item.id!;
+  }
+
   trackUserAccountById(index: number, item: IUserAccount): number {
     return item.id!;
+  }
+
+  getSelectedQuestion(option: IQuestion, selectedVals?: IQuestion[]): IQuestion {
+    if (selectedVals) {
+      for (const selectedVal of selectedVals) {
+        if (option.id === selectedVal.id) {
+          return selectedVal;
+        }
+      }
+    }
+    return option;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IQuiz>>): void {
@@ -85,9 +105,14 @@ export class QuizUpdateComponent implements OnInit {
       name: quiz.name,
       code: quiz.code,
       quizType: quiz.quizType,
+      questions: quiz.questions,
       owner: quiz.owner,
     });
 
+    this.questionsSharedCollection = this.questionService.addQuestionToCollectionIfMissing(
+      this.questionsSharedCollection,
+      ...(quiz.questions ?? [])
+    );
     this.userAccountsSharedCollection = this.userAccountService.addUserAccountToCollectionIfMissing(
       this.userAccountsSharedCollection,
       quiz.owner
@@ -95,6 +120,16 @@ export class QuizUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
+    this.questionService
+      .query()
+      .pipe(map((res: HttpResponse<IQuestion[]>) => res.body ?? []))
+      .pipe(
+        map((questions: IQuestion[]) =>
+          this.questionService.addQuestionToCollectionIfMissing(questions, ...(this.editForm.get('questions')!.value ?? []))
+        )
+      )
+      .subscribe((questions: IQuestion[]) => (this.questionsSharedCollection = questions));
+
     this.userAccountService
       .query()
       .pipe(map((res: HttpResponse<IUserAccount[]>) => res.body ?? []))
@@ -113,6 +148,7 @@ export class QuizUpdateComponent implements OnInit {
       name: this.editForm.get(['name'])!.value,
       code: this.editForm.get(['code'])!.value,
       quizType: this.editForm.get(['quizType'])!.value,
+      questions: this.editForm.get(['questions'])!.value,
       owner: this.editForm.get(['owner'])!.value,
     };
   }

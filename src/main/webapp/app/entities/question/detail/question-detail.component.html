@@ -50,12 +50,6 @@
         <dd>
           <span>{{ question.timeLimit }}</span>
         </dd>
-        <dt><span>Quiz</span></dt>
-        <dd>
-          <div *ngIf="question.quiz">
-            <a [routerLink]="['/quiz', question.quiz?.id, 'view']">{{ question.quiz?.id }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

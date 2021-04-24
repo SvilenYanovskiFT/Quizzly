@@ -60,6 +60,7 @@ public class CacheConfiguration {
             createCache(cm, com.quizzly.domain.QuestionAnswer.class.getName());
             createCache(cm, com.quizzly.domain.QuizRezult.class.getName());
             createCache(cm, com.quizzly.domain.QuizRezult.class.getName() + ".questionAnswers");
+            createCache(cm, com.quizzly.domain.Question.class.getName() + ".quizzes");
             // jhipster-needle-ehcache-add-entry
         };
     }

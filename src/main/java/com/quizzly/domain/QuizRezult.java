@@ -34,7 +34,7 @@ public class QuizRezult implements Serializable {
     private Set<QuestionAnswer> questionAnswers = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "questions", "quizRezults", "owner" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "quizRezults", "questions", "owner" }, allowSetters = true)
     private Quiz quiz;
 
     @ManyToOne

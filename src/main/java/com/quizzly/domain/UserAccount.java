@@ -42,7 +42,7 @@ public class UserAccount implements Serializable {
 
     @OneToMany(mappedBy = "owner")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "questions", "quizRezults", "owner" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "quizRezults", "questions", "owner" }, allowSetters = true)
     private Set<Quiz> quizzes = new HashSet<>();
 
     @OneToMany(mappedBy = "quizRezult")

@@ -2,6 +2,7 @@ package com.quizzly.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -9,16 +10,23 @@ import com.quizzly.IntegrationTest;
 import com.quizzly.domain.Quiz;
 import com.quizzly.domain.enumeration.QuizType;
 import com.quizzly.repository.QuizRepository;
+import com.quizzly.service.QuizService;
 import com.quizzly.service.dto.QuizDTO;
 import com.quizzly.service.mapper.QuizMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link QuizResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class QuizResourceIT {
@@ -50,8 +59,14 @@ class QuizResourceIT {
     @Autowired
     private QuizRepository quizRepository;
 
+    @Mock
+    private QuizRepository quizRepositoryMock;
+
     @Autowired
     private QuizMapper quizMapper;
+
+    @Mock
+    private QuizService quizServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -141,6 +156,24 @@ class QuizResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE)))
             .andExpect(jsonPath("$.[*].quizType").value(hasItem(DEFAULT_QUIZ_TYPE.toString())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllQuizzesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(quizServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restQuizMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(quizServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllQuizzesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(quizServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restQuizMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(quizServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

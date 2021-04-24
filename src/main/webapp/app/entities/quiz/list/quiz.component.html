@@ -36,6 +36,7 @@
           <th scope="col"><span>Name</span></th>
           <th scope="col"><span>Code</span></th>
           <th scope="col"><span>Quiz Type</span></th>
+          <th scope="col"><span>Question</span></th>
           <th scope="col"><span>Owner</span></th>
           <th scope="col"></th>
         </tr>
@@ -48,6 +49,12 @@
           <td>{{ quiz.name }}</td>
           <td>{{ quiz.code }}</td>
           <td>{{ quiz.quizType }}</td>
+          <td>
+            <span *ngFor="let question of quiz.questions; let last = last">
+              <a class="form-control-static" [routerLink]="['/question', question.id, 'view']">{{ question.id }}</a
+              >{{ last ? '' : ', ' }}
+            </span>
+          </td>
           <td>
             <div *ngIf="quiz.owner">
               <a [routerLink]="['/user-account', quiz.owner?.id, 'view']">{{ quiz.owner?.id }}</a>

@@ -62,43 +62,6 @@ describe('Component Tests', () => {
         expect(quizService.addQuizToCollectionIfMissing).toHaveBeenCalledWith(quizCollection, ...additionalQuizzes);
         expect(comp.quizzesSharedCollection).toEqual(expectedCollection);
       });
-
-      it('Should call UserAccount query and add missing value', () => {
-        const quizRezult: IQuizRezult = { id: 456 };
-        const quizRezult: IUserAccount = { id: 31164 };
-        quizRezult.quizRezult = quizRezult;
-
-        const userAccountCollection: IUserAccount[] = [{ id: 69727 }];
-        spyOn(userAccountService, 'query').and.returnValue(of(new HttpResponse({ body: userAccountCollection })));
-        const additionalUserAccounts = [quizRezult];
-        const expectedCollection: IUserAccount[] = [...additionalUserAccounts, ...userAccountCollection];
-        spyOn(userAccountService, 'addUserAccountToCollectionIfMissing').and.returnValue(expectedCollection);
-
-        activatedRoute.data = of({ quizRezult });
-        comp.ngOnInit();
-
-        expect(userAccountService.query).toHaveBeenCalled();
-        expect(userAccountService.addUserAccountToCollectionIfMissing).toHaveBeenCalledWith(
-          userAccountCollection,
-          ...additionalUserAccounts
-        );
-        expect(comp.userAccountsSharedCollection).toEqual(expectedCollection);
-      });
-
-      it('Should update editForm', () => {
-        const quizRezult: IQuizRezult = { id: 456 };
-        const quiz: IQuiz = { id: 28514 };
-        quizRezult.quiz = quiz;
-        const quizRezult: IUserAccount = { id: 29959 };
-        quizRezult.quizRezult = quizRezult;
-
-        activatedRoute.data = of({ quizRezult });
-        comp.ngOnInit();
-
-        expect(comp.editForm.value).toEqual(expect.objectContaining(quizRezult));
-        expect(comp.quizzesSharedCollection).toContain(quiz);
-        expect(comp.userAccountsSharedCollection).toContain(quizRezult);
-      });
     });
 
     describe('save', () => {

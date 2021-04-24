@@ -35,13 +35,18 @@ public class Quiz implements Serializable {
 
     @OneToMany(mappedBy = "quiz")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "questionAnswers", "quiz" }, allowSetters = true)
-    private Set<Question> questions = new HashSet<>();
-
-    @OneToMany(mappedBy = "quiz")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "questionAnswers", "quiz", "quizRezult" }, allowSetters = true)
     private Set<QuizRezult> quizRezults = new HashSet<>();
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(
+        name = "rel_quiz__question",
+        joinColumns = @JoinColumn(name = "quiz_id"),
+        inverseJoinColumns = @JoinColumn(name = "question_id")
+    )
+    @JsonIgnoreProperties(value = { "questionAnswers", "quizzes" }, allowSetters = true)
+    private Set<Question> questions = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "quizRezults" }, allowSetters = true)
@@ -100,37 +105,6 @@ public class Quiz implements Serializable {
         this.quizType = quizType;
     }
 
-    public Set<Question> getQuestions() {
-        return this.questions;
-    }
-
-    public Quiz questions(Set<Question> questions) {
-        this.setQuestions(questions);
-        return this;
-    }
-
-    public Quiz addQuestion(Question question) {
-        this.questions.add(question);
-        question.setQuiz(this);
-        return this;
-    }
-
-    public Quiz removeQuestion(Question question) {
-        this.questions.remove(question);
-        question.setQuiz(null);
-        return this;
-    }
-
-    public void setQuestions(Set<Question> questions) {
-        if (this.questions != null) {
-            this.questions.forEach(i -> i.setQuiz(null));
-        }
-        if (questions != null) {
-            questions.forEach(i -> i.setQuiz(this));
-        }
-        this.questions = questions;
-    }
-
     public Set<QuizRezult> getQuizRezults() {
         return this.quizRezults;
     }
@@ -160,6 +134,31 @@ public class Quiz implements Serializable {
             quizRezults.forEach(i -> i.setQuiz(this));
         }
         this.quizRezults = quizRezults;
+    }
+
+    public Set<Question> getQuestions() {
+        return this.questions;
+    }
+
+    public Quiz questions(Set<Question> questions) {
+        this.setQuestions(questions);
+        return this;
+    }
+
+    public Quiz addQuestion(Question question) {
+        this.questions.add(question);
+        question.getQuizzes().add(this);
+        return this;
+    }
+
+    public Quiz removeQuestion(Question question) {
+        this.questions.remove(question);
+        question.getQuizzes().remove(this);
+        return this;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        this.questions = questions;
     }
 
     public UserAccount getOwner() {

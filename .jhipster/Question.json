@@ -47,10 +47,11 @@
       "relationshipName": "questionAnswer"
     },
     {
-      "relationshipType": "many-to-one",
+      "relationshipType": "many-to-many",
       "otherEntityName": "quiz",
       "otherEntityRelationshipName": "question",
-      "relationshipName": "quiz"
+      "relationshipName": "quiz",
+      "ownerSide": false
     }
   ],
   "entityTableName": "question",

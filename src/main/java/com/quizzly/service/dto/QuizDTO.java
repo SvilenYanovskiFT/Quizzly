@@ -2,7 +2,9 @@ package com.quizzly.service.dto;
 
 import com.quizzly.domain.enumeration.QuizType;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.quizzly.domain.Quiz} entity.
@@ -16,6 +18,8 @@ public class QuizDTO implements Serializable {
     private String code;
 
     private QuizType quizType;
+
+    private Set<QuestionDTO> questions = new HashSet<>();
 
     private UserAccountDTO owner;
 
@@ -49,6 +53,14 @@ public class QuizDTO implements Serializable {
 
     public void setQuizType(QuizType quizType) {
         this.quizType = quizType;
+    }
+
+    public Set<QuestionDTO> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(Set<QuestionDTO> questions) {
+        this.questions = questions;
     }
 
     public UserAccountDTO getOwner() {
@@ -88,6 +100,7 @@ public class QuizDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", code='" + getCode() + "'" +
             ", quizType='" + getQuizType() + "'" +
+            ", questions=" + getQuestions() +
             ", owner=" + getOwner() +
             "}";
     }

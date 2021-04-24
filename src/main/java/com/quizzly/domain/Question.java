@@ -56,9 +56,10 @@ public class Question implements Serializable {
     @JsonIgnoreProperties(value = { "question", "participant", "rezult" }, allowSetters = true)
     private Set<QuestionAnswer> questionAnswers = new HashSet<>();
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "questions", "quizRezults", "owner" }, allowSetters = true)
-    private Quiz quiz;
+    @ManyToMany(mappedBy = "questions")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "quizRezults", "questions", "owner" }, allowSetters = true)
+    private Set<Quiz> quizzes = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -222,17 +223,35 @@ public class Question implements Serializable {
         this.questionAnswers = questionAnswers;
     }
 
-    public Quiz getQuiz() {
-        return this.quiz;
+    public Set<Quiz> getQuizzes() {
+        return this.quizzes;
     }
 
-    public Question quiz(Quiz quiz) {
-        this.setQuiz(quiz);
+    public Question quizzes(Set<Quiz> quizzes) {
+        this.setQuizzes(quizzes);
         return this;
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+    public Question addQuiz(Quiz quiz) {
+        this.quizzes.add(quiz);
+        quiz.getQuestions().add(this);
+        return this;
+    }
+
+    public Question removeQuiz(Quiz quiz) {
+        this.quizzes.remove(quiz);
+        quiz.getQuestions().remove(this);
+        return this;
+    }
+
+    public void setQuizzes(Set<Quiz> quizzes) {
+        if (this.quizzes != null) {
+            this.quizzes.forEach(i -> i.removeQuestion(this));
+        }
+        if (quizzes != null) {
+            quizzes.forEach(i -> i.addQuestion(this));
+        }
+        this.quizzes = quizzes;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

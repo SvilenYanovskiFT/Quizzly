@@ -18,15 +18,16 @@
   "relationships": [
     {
       "relationshipType": "one-to-many",
-      "otherEntityName": "question",
-      "otherEntityRelationshipName": "quiz",
-      "relationshipName": "question"
-    },
-    {
-      "relationshipType": "one-to-many",
       "otherEntityName": "quizRezult",
       "otherEntityRelationshipName": "quiz",
       "relationshipName": "quizRezult"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "question",
+      "otherEntityRelationshipName": "quiz",
+      "relationshipName": "question",
+      "ownerSide": true
     },
     {
       "relationshipType": "many-to-one",

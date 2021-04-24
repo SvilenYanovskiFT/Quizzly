@@ -9,8 +9,6 @@ import { of, Subject } from 'rxjs';
 
 import { QuestionService } from '../service/question.service';
 import { IQuestion, Question } from '../question.model';
-import { IQuiz } from 'app/entities/quiz/quiz.model';
-import { QuizService } from 'app/entities/quiz/service/quiz.service';
 
 import { QuestionUpdateComponent } from './question-update.component';
 
@@ -20,7 +18,6 @@ describe('Component Tests', () => {
     let fixture: ComponentFixture<QuestionUpdateComponent>;
     let activatedRoute: ActivatedRoute;
     let questionService: QuestionService;
-    let quizService: QuizService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -34,41 +31,18 @@ describe('Component Tests', () => {
       fixture = TestBed.createComponent(QuestionUpdateComponent);
       activatedRoute = TestBed.inject(ActivatedRoute);
       questionService = TestBed.inject(QuestionService);
-      quizService = TestBed.inject(QuizService);
 
       comp = fixture.componentInstance;
     });
 
     describe('ngOnInit', () => {
-      it('Should call Quiz query and add missing value', () => {
-        const question: IQuestion = { id: 456 };
-        const quiz: IQuiz = { id: 85618 };
-        question.quiz = quiz;
-
-        const quizCollection: IQuiz[] = [{ id: 609 }];
-        spyOn(quizService, 'query').and.returnValue(of(new HttpResponse({ body: quizCollection })));
-        const additionalQuizzes = [quiz];
-        const expectedCollection: IQuiz[] = [...additionalQuizzes, ...quizCollection];
-        spyOn(quizService, 'addQuizToCollectionIfMissing').and.returnValue(expectedCollection);
-
-        activatedRoute.data = of({ question });
-        comp.ngOnInit();
-
-        expect(quizService.query).toHaveBeenCalled();
-        expect(quizService.addQuizToCollectionIfMissing).toHaveBeenCalledWith(quizCollection, ...additionalQuizzes);
-        expect(comp.quizzesSharedCollection).toEqual(expectedCollection);
-      });
-
       it('Should update editForm', () => {
         const question: IQuestion = { id: 456 };
-        const quiz: IQuiz = { id: 84883 };
-        question.quiz = quiz;
 
         activatedRoute.data = of({ question });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(question));
-        expect(comp.quizzesSharedCollection).toContain(quiz);
       });
     });
 
@@ -133,16 +107,6 @@ describe('Component Tests', () => {
         expect(questionService.update).toHaveBeenCalledWith(question);
         expect(comp.isSaving).toEqual(false);
         expect(comp.previousState).not.toHaveBeenCalled();
-      });
-    });
-
-    describe('Tracking relationships identifiers', () => {
-      describe('trackQuizById', () => {
-        it('Should return tracked Quiz primary key', () => {
-          const entity = { id: 123 };
-          const trackResult = comp.trackQuizById(0, entity);
-          expect(trackResult).toEqual(entity.id);
-        });
       });
     });
   });

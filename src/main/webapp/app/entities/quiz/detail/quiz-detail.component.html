@@ -26,6 +26,13 @@
         <dd>
           <span>{{ quiz.quizType }}</span>
         </dd>
+        <dt><span>Question</span></dt>
+        <dd>
+          <span *ngFor="let question of quiz.questions; let last = last">
+            <a [routerLink]="['/question', question?.id, 'view']">{{ question.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
         <dt><span>Owner</span></dt>
         <dd>
           <div *ngIf="quiz.owner">

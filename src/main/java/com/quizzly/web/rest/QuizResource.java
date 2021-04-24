@@ -131,10 +131,11 @@ public class QuizResource {
     /**
      * {@code GET  /quizzes} : get all the quizzes.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of quizzes in body.
      */
     @GetMapping("/quizzes")
-    public List<QuizDTO> getAllQuizzes() {
+    public List<QuizDTO> getAllQuizzes(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Quizzes");
         return quizService.findAll();
     }

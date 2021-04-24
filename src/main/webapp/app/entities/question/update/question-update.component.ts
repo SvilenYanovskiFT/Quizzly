@@ -3,12 +3,10 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { IQuestion, Question } from '../question.model';
 import { QuestionService } from '../service/question.service';
-import { IQuiz } from 'app/entities/quiz/quiz.model';
-import { QuizService } from 'app/entities/quiz/service/quiz.service';
 
 @Component({
   selector: 'jhi-question-update',
@@ -16,8 +14,6 @@ import { QuizService } from 'app/entities/quiz/service/quiz.service';
 })
 export class QuestionUpdateComponent implements OnInit {
   isSaving = false;
-
-  quizzesSharedCollection: IQuiz[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -30,21 +26,13 @@ export class QuestionUpdateComponent implements OnInit {
     answerD: [],
     correctAnswer: [],
     timeLimit: [],
-    quiz: [],
   });
 
-  constructor(
-    protected questionService: QuestionService,
-    protected quizService: QuizService,
-    protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
-  ) {}
+  constructor(protected questionService: QuestionService, protected activatedRoute: ActivatedRoute, protected fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ question }) => {
       this.updateForm(question);
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -60,10 +48,6 @@ export class QuestionUpdateComponent implements OnInit {
     } else {
       this.subscribeToSaveResponse(this.questionService.create(question));
     }
-  }
-
-  trackQuizById(index: number, item: IQuiz): number {
-    return item.id!;
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IQuestion>>): void {
@@ -97,18 +81,7 @@ export class QuestionUpdateComponent implements OnInit {
       answerD: question.answerD,
       correctAnswer: question.correctAnswer,
       timeLimit: question.timeLimit,
-      quiz: question.quiz,
     });
-
-    this.quizzesSharedCollection = this.quizService.addQuizToCollectionIfMissing(this.quizzesSharedCollection, question.quiz);
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.quizService
-      .query()
-      .pipe(map((res: HttpResponse<IQuiz[]>) => res.body ?? []))
-      .pipe(map((quizzes: IQuiz[]) => this.quizService.addQuizToCollectionIfMissing(quizzes, this.editForm.get('quiz')!.value)))
-      .subscribe((quizzes: IQuiz[]) => (this.quizzesSharedCollection = quizzes));
   }
 
   protected createFromForm(): IQuestion {
@@ -124,7 +97,6 @@ export class QuestionUpdateComponent implements OnInit {
       answerD: this.editForm.get(['answerD'])!.value,
       correctAnswer: this.editForm.get(['correctAnswer'])!.value,
       timeLimit: this.editForm.get(['timeLimit'])!.value,
-      quiz: this.editForm.get(['quiz'])!.value,
     };
   }
 }

@@ -32,7 +32,7 @@ public class QuestionAnswer implements Serializable {
     private AnswerCode answer;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "questionAnswers", "quiz" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questionAnswers", "quizzes" }, allowSetters = true)
     private Question question;
 
     @ManyToOne

@@ -14,7 +14,7 @@ export interface IQuestion {
   correctAnswer?: AnswerCode | null;
   timeLimit?: number | null;
   questionAnswers?: IQuestionAnswer[] | null;
-  quiz?: IQuiz | null;
+  quizzes?: IQuiz[] | null;
 }
 
 export class Question implements IQuestion {
@@ -30,7 +30,7 @@ export class Question implements IQuestion {
     public correctAnswer?: AnswerCode | null,
     public timeLimit?: number | null,
     public questionAnswers?: IQuestionAnswer[] | null,
-    public quiz?: IQuiz | null
+    public quizzes?: IQuiz[] | null
   ) {}
 }
 

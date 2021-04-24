@@ -67,19 +67,6 @@
           <label class="form-control-label" for="field_timeLimit">Time Limit</label>
           <input type="number" class="form-control" name="timeLimit" id="field_timeLimit" data-cy="timeLimit" formControlName="timeLimit" />
         </div>
-
-        <div class="form-group">
-          <label class="form-control-label" for="field_quiz">Quiz</label>
-          <select class="form-control" id="field_quiz" data-cy="quiz" name="quiz" formControlName="quiz">
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="quizOption.id === editForm.get('quiz')!.value?.id ? editForm.get('quiz')!.value : quizOption"
-              *ngFor="let quizOption of quizzesSharedCollection; trackBy: trackQuizById"
-            >
-              {{ quizOption.id }}
-            </option>
-          </select>
-        </div>
       </div>
 
       <div>

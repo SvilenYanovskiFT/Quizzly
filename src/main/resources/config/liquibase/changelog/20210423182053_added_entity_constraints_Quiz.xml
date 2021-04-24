@@ -8,6 +8,18 @@
     -->
     <changeSet id="20210423182053-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="quiz_id"
+                                 baseTableName="rel_quiz__question"
+                                 constraintName="fk_rel_quiz__question__quiz_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="quiz"/>
+
+        <addForeignKeyConstraint baseColumnNames="question_id"
+                                 baseTableName="rel_quiz__question"
+                                 constraintName="fk_rel_quiz__question__question_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="question"/>
+
         <addForeignKeyConstraint baseColumnNames="owner_id"
                                  baseTableName="quiz"
                                  constraintName="fk_quiz__owner_id"

@@ -43,13 +43,16 @@ entity QuizRezult {
 }
 
 relationship OneToMany {
-	Quiz to Question{quiz},
     Question to QuestionAnswer{question},
     UserAccount to QuestionAnswer{participant},
     UserAccount to Quiz{owner},
     Quiz to QuizRezult{quiz},
     QuizRezult to QuestionAnswer{rezult},
     UserAccount to QuizRezult{quizRezult}
+}
+
+relationship ManyToMany {
+	Quiz{question} to Question{quiz}
 }
 
 relationship OneToOne {

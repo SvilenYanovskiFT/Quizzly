@@ -50,10 +50,10 @@ describe('Component Tests', () => {
     describe('ngOnInit', () => {
       it('Should call Question query and add missing value', () => {
         const questionAnswer: IQuestionAnswer = { id: 456 };
-        const question: IQuestion = { id: 37892 };
+        const question: IQuestion = { id: 94612 };
         questionAnswer.question = question;
 
-        const questionCollection: IQuestion[] = [{ id: 26974 }];
+        const questionCollection: IQuestion[] = [{ id: 76624 }];
         spyOn(questionService, 'query').and.returnValue(of(new HttpResponse({ body: questionCollection })));
         const additionalQuestions = [question];
         const expectedCollection: IQuestion[] = [...additionalQuestions, ...questionCollection];
@@ -110,7 +110,7 @@ describe('Component Tests', () => {
 
       it('Should update editForm', () => {
         const questionAnswer: IQuestionAnswer = { id: 456 };
-        const question: IQuestion = { id: 52389 };
+        const question: IQuestion = { id: 66635 };
         questionAnswer.question = question;
         const participant: IUserAccount = { id: 94355 };
         questionAnswer.participant = participant;

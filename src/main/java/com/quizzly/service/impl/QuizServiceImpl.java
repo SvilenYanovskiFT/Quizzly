@@ -11,6 +11,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,14 +62,22 @@ public class QuizServiceImpl implements QuizService {
     @Transactional(readOnly = true)
     public List<QuizDTO> findAll() {
         log.debug("Request to get all Quizzes");
-        return quizRepository.findAll().stream().map(quizMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
+        return quizRepository
+            .findAllWithEagerRelationships()
+            .stream()
+            .map(quizMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    public Page<QuizDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return quizRepository.findAllWithEagerRelationships(pageable).map(quizMapper::toDto);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<QuizDTO> findOne(Long id) {
         log.debug("Request to get Quiz : {}", id);
-        return quizRepository.findById(id).map(quizMapper::toDto);
+        return quizRepository.findOneWithEagerRelationships(id).map(quizMapper::toDto);
     }
 
     @Override

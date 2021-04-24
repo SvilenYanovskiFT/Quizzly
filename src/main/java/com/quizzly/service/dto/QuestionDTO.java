@@ -29,8 +29,6 @@ public class QuestionDTO implements Serializable {
 
     private Long timeLimit;
 
-    private QuizDTO quiz;
-
     public Long getId() {
         return id;
     }
@@ -111,14 +109,6 @@ public class QuestionDTO implements Serializable {
         this.timeLimit = timeLimit;
     }
 
-    public QuizDTO getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(QuizDTO quiz) {
-        this.quiz = quiz;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -154,7 +144,6 @@ public class QuestionDTO implements Serializable {
             ", answerD='" + getAnswerD() + "'" +
             ", correctAnswer='" + getCorrectAnswer() + "'" +
             ", timeLimit=" + getTimeLimit() +
-            ", quiz=" + getQuiz() +
             "}";
     }
 }

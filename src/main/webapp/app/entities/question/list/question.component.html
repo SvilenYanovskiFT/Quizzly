@@ -42,7 +42,6 @@
           <th scope="col"><span>Answer D</span></th>
           <th scope="col"><span>Correct Answer</span></th>
           <th scope="col"><span>Time Limit</span></th>
-          <th scope="col"><span>Quiz</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -60,11 +59,6 @@
           <td>{{ question.answerD }}</td>
           <td>{{ question.correctAnswer }}</td>
           <td>{{ question.timeLimit }}</td>
-          <td>
-            <div *ngIf="question.quiz">
-              <a [routerLink]="['/quiz', question.quiz?.id, 'view']">{{ question.quiz?.id }}</a>
-            </div>
-          </td>
           <td class="text-right">
             <div class="btn-group">
               <button
