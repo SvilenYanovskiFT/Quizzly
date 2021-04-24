@@ -1,0 +1,67 @@
+{
+  "name": "Question",
+  "fields": [
+    {
+      "fieldName": "sortOrder",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "text",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "answerA",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "answerB",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "answerC",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "answerD",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "correctAnswer",
+      "fieldType": "AnswerCode",
+      "fieldValues": "A,B,C,D"
+    },
+    {
+      "fieldName": "timeLimit",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "questionAnswer",
+      "otherEntityRelationshipName": "question",
+      "relationshipName": "questionAnswer"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "quiz",
+      "otherEntityRelationshipName": "question",
+      "relationshipName": "quiz",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "question",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210424054838"
+}

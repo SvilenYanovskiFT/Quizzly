@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-question-answer-heading" data-cy="QuestionAnswerCreateUpdateHeading">Create or edit a Question Answer</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_timeTaken">Time Taken</label>
+          <input type="number" class="form-control" name="timeTaken" id="field_timeTaken" data-cy="timeTaken" formControlName="timeTaken" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_success">Success</label>
+          <input type="checkbox" class="form-check" name="success" id="field_success" data-cy="success" formControlName="success" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_answer">Answer</label>
+          <select class="form-control" name="answer" formControlName="answer" id="field_answer" data-cy="answer">
+            <option [ngValue]="null"></option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_question">Question</label>
+          <select class="form-control" id="field_question" data-cy="question" name="question" formControlName="question">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="questionOption.id === editForm.get('question')!.value?.id ? editForm.get('question')!.value : questionOption"
+              *ngFor="let questionOption of questionsSharedCollection; trackBy: trackQuestionById"
+            >
+              {{ questionOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_participant">Participant</label>
+          <select class="form-control" id="field_participant" data-cy="participant" name="participant" formControlName="participant">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                userAccountOption.id === editForm.get('participant')!.value?.id ? editForm.get('participant')!.value : userAccountOption
+              "
+              *ngFor="let userAccountOption of userAccountsSharedCollection; trackBy: trackUserAccountById"
+            >
+              {{ userAccountOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_rezult">Rezult</label>
+          <select class="form-control" id="field_rezult" data-cy="rezult" name="rezult" formControlName="rezult">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="quizRezultOption.id === editForm.get('rezult')!.value?.id ? editForm.get('rezult')!.value : quizRezultOption"
+              *ngFor="let quizRezultOption of quizRezultsSharedCollection; trackBy: trackQuizRezultById"
+            >
+              {{ quizRezultOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
