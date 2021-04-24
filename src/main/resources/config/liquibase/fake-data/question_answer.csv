@@ -1,0 +1,11 @@
+id;time_taken;success;answer
+1;17331;true;C
+2;73316;false;D
+3;67682;true;B
+4;71572;true;D
+5;68340;true;C
+6;46884;false;B
+7;7225;false;A
+8;47852;false;B
+9;61690;true;A
+10;21181;true;B

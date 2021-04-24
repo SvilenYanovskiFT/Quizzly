@@ -1,0 +1,112 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-question-heading" data-cy="QuestionCreateUpdateHeading">Create or edit a Question</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_sortOrder">Sort Order</label>
+          <input type="number" class="form-control" name="sortOrder" id="field_sortOrder" data-cy="sortOrder" formControlName="sortOrder" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_text">Text</label>
+          <input type="text" class="form-control" name="text" id="field_text" data-cy="text" formControlName="text" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_image">Image</label>
+          <input type="text" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_answerA">Answer A</label>
+          <input type="text" class="form-control" name="answerA" id="field_answerA" data-cy="answerA" formControlName="answerA" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_answerB">Answer B</label>
+          <input type="text" class="form-control" name="answerB" id="field_answerB" data-cy="answerB" formControlName="answerB" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_answerC">Answer C</label>
+          <input type="text" class="form-control" name="answerC" id="field_answerC" data-cy="answerC" formControlName="answerC" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_answerD">Answer D</label>
+          <input type="text" class="form-control" name="answerD" id="field_answerD" data-cy="answerD" formControlName="answerD" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_correctAnswer">Correct Answer</label>
+          <select
+            class="form-control"
+            name="correctAnswer"
+            formControlName="correctAnswer"
+            id="field_correctAnswer"
+            data-cy="correctAnswer"
+          >
+            <option [ngValue]="null"></option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_timeLimit">Time Limit</label>
+          <input type="number" class="form-control" name="timeLimit" id="field_timeLimit" data-cy="timeLimit" formControlName="timeLimit" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_questionCategory">Question Category</label>
+          <select
+            class="form-control"
+            id="field_questionCategory"
+            data-cy="questionCategory"
+            name="questionCategory"
+            formControlName="questionCategory"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                questionCategoryOption.id === editForm.get('questionCategory')!.value?.id
+                  ? editForm.get('questionCategory')!.value
+                  : questionCategoryOption
+              "
+              *ngFor="let questionCategoryOption of questionCategoriesSharedCollection; trackBy: trackQuestionCategoryById"
+            >
+              {{ questionCategoryOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

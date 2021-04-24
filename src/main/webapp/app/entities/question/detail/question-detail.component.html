@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="question">
+      <h2 data-cy="questionDetailsHeading"><span>Question</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ question.id }}</span>
+        </dd>
+        <dt><span>Sort Order</span></dt>
+        <dd>
+          <span>{{ question.sortOrder }}</span>
+        </dd>
+        <dt><span>Text</span></dt>
+        <dd>
+          <span>{{ question.text }}</span>
+        </dd>
+        <dt><span>Image</span></dt>
+        <dd>
+          <span>{{ question.image }}</span>
+        </dd>
+        <dt><span>Answer A</span></dt>
+        <dd>
+          <span>{{ question.answerA }}</span>
+        </dd>
+        <dt><span>Answer B</span></dt>
+        <dd>
+          <span>{{ question.answerB }}</span>
+        </dd>
+        <dt><span>Answer C</span></dt>
+        <dd>
+          <span>{{ question.answerC }}</span>
+        </dd>
+        <dt><span>Answer D</span></dt>
+        <dd>
+          <span>{{ question.answerD }}</span>
+        </dd>
+        <dt><span>Correct Answer</span></dt>
+        <dd>
+          <span>{{ question.correctAnswer }}</span>
+        </dd>
+        <dt><span>Time Limit</span></dt>
+        <dd>
+          <span>{{ question.timeLimit }}</span>
+        </dd>
+        <dt><span>Question Category</span></dt>
+        <dd>
+          <div *ngIf="question.questionCategory">
+            <a [routerLink]="['/question-category', question.questionCategory?.id, 'view']">{{ question.questionCategory?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/question', question.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
