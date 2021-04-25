@@ -6,6 +6,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access.service'
 import { MyDashboardComponent } from 'app/home/my-dashboard/my-dashboard.component';
 import { MyQuizzesComponent } from 'app/home/my-quizzes/my-quizzes.component';
 import { MyQuestionsComponent } from 'app/home/my-questions/my-questions.component';
+import { StartQuizComponent } from 'app/home/start-quiz/start-quiz.component';
 
 export const HOME_ROUTE: Routes = [
   {
@@ -20,6 +21,7 @@ export const HOME_ROUTE: Routes = [
     component: MyDashboardComponent,
     data: {
       authorities: [Authority.USER],
+      pageTitle: 'Quizzes Dashboard!',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -28,6 +30,7 @@ export const HOME_ROUTE: Routes = [
     component: MyQuizzesComponent,
     data: {
       authorities: [Authority.USER],
+      pageTitle: 'Your Quizzes!',
     },
     canActivate: [UserRouteAccessService],
   },
@@ -36,6 +39,16 @@ export const HOME_ROUTE: Routes = [
     component: MyQuestionsComponent,
     data: {
       authorities: [Authority.USER],
+      pageTitle: 'Your Questions!',
+    },
+    canActivate: [UserRouteAccessService],
+  },
+  {
+    path: 'start-quiz/:code',
+    component: StartQuizComponent,
+    data: {
+      authorities: [Authority.USER],
+      pageTitle: 'Achtung! Quiz on horizon!',
     },
     canActivate: [UserRouteAccessService],
   },

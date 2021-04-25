@@ -1,1 +1,109 @@
-<p>my-dashboard works!</p>
+<section class="video-container">
+  <div class="bg-video">
+    <video class="bg-video__content" autoplay [muted]="true" loop>
+      <source src="../../../content/images/waves.mp4" type="video/mp4" />
+      <source src="../../../content/images/waves.webm" type="video/webm" />
+      Your browser is not supported!
+    </video>
+  </div>
+
+  <div class="row">
+    <div class="centered">
+      <div class="jumbotron wide">
+        <h4 class="display-5">This is your dashboard, champion!</h4>
+        <p class="lead">Remember, the excellence comes with practice. Do more quizzes!</p>
+        <hr class="my-4" />
+        <p>Don't hesitate, create your own quiz and start adding questions.</p>
+        <button type="button" class="btn btn-primary">Create Question</button>
+        <button type="button" class="btn btn-primary">Create Quiz</button>
+      </div>
+    </div>
+
+    <div class="centered">
+      <div class="row">
+        <div class="col-xl-6">
+          <div class="card border-primary mb-3">
+            <h4 class="card-header">Your last Invitations:</h4>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Invited By</th>
+                    <th scope="col">Quiz Code</th>
+                    <th scope="col">Response</th>
+                    <th scope="col">Score</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let inv of invitations">
+                    <tr [ngClass]="inv.response === 'rejected' ? 'table-danger' : 'table-success'">
+                      <td class="table-cell">{{ inv.invBy }}</td>
+                      <td class="table-cell">{{ inv.code }}</td>
+                      <td class="table-cell">{{ inv.response }}</td>
+                      <td class="table-cell">{{ inv.score }}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <div class="card border-primary mb-3">
+            <h4 class="card-header">Top 10 leaderboard:</h4>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Quizzes</th>
+                    <th scope="col">Average Score</th>
+                    <th scope="col">Rank</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let player of topPlayers; let i = index">
+                    <tr [ngClass]="i % 2 === 0 ? 'table-info' : 'table-warning'">
+                      <td class="table-cell">{{ player.login }}</td>
+                      <td class="table-cell">{{ player.quizzes }}</td>
+                      <td class="table-cell">{{ player.avg }}</td>
+                      <td class="table-cell">{{ player.rank }}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--    <div class="col-md-3">-->
+    <!--      <div class="card border-primary mb-3">-->
+    <!--        <h4 class="card-header">Your last {{quizzesTaken.length}} quizzes:</h4>-->
+    <!--        <div class="card-body">-->
+    <!--          <table class="table table-hover">-->
+    <!--            <thead>-->
+    <!--            <tr>-->
+    <!--              <th scope="col">Code</th>-->
+    <!--              <th scope="col">Players</th>-->
+    <!--              <th scope="col">Score</th>-->
+    <!--              <th scope="col">Rank</th>-->
+    <!--            </tr>-->
+    <!--            </thead>-->
+    <!--            <tbody>-->
+    <!--            <ng-container *ngFor="let quiz of quizzesTaken; let i = index;">-->
+    <!--              <tr [ngClass]="i % 2 === 0 ? 'table-info' : 'table-warning'">-->
+    <!--                <td>{{quiz.code}}</td>-->
+    <!--                <td>{{quiz.players}}</td>-->
+    <!--                <td>{{quiz.score}}</td>-->
+    <!--                <td>{{quiz.rank}}</td>-->
+    <!--              </tr>-->
+    <!--            </ng-container>-->
+    <!--            </tbody>-->
+    <!--          </table>-->
+    <!--        </div>-->
+    <!--      </div>-->
+    <!--    </div>-->
+  </div>
+</section>

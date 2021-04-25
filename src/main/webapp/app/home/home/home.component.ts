@@ -36,6 +36,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   joinQuiz(): void {
-    console.log(this.code);
+    this.router.navigate(['start-quiz', this.code]);
   }
 }
