@@ -20,6 +20,30 @@
   height: 100%;
 }
 
+.counter {
+  position: absolute;
+  top: 1.5rem;
+  right: 3rem;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.counter-ok {
+  color: green;
+}
+
+.counter-hurry {
+  color: red;
+}
+
+.sw-icon {
+  position: absolute;
+  top: 1.5rem;
+  right: 9rem;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
 .quiz-content {
   position: relative;
 }

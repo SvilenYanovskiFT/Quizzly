@@ -1,5 +1,9 @@
 <section class="quiz-bg">
   <img class="quiz-img" src="../../../content/images/quiz.jpg" alt="" />
+  <fa-icon icon="stopwatch" class="sw-icon" [ngClass]="timeLimit <= 5 ? 'counter-hurry' : 'counter-ok'"></fa-icon>
+  <div class="counter" [ngClass]="timeLimit <= 5 ? 'counter-hurry' : 'counter-ok'">
+    <span>{{ timeLimit }}</span>
+  </div>
   <div class="quiz-content row">
     <div class="centered">
       <div class="jumbotron quiz-body bg-white">
@@ -15,10 +19,16 @@
           auctor orci.
         </p>
         <div class="answers">
-          <button type="button" class="btn btn-success btn-lg answer-btn">This is answer A. It may be quite long answer, why not.</button>
-          <button type="button" class="btn btn-info btn-lg answer-btn">This is answer B. It may be quite long answer, why not.</button>
-          <button type="button" class="btn btn-warning btn-lg answer-btn">This is answer C.</button>
-          <button type="button" class="btn btn-danger btn-lg answer-btn">This is answer D. It may be quite long answer, why not.</button>
+          <button [disabled]="timeLimit === 0" type="button" class="btn btn-success btn-lg answer-btn">
+            This is answer A. It may be quite long answer, why not.
+          </button>
+          <button [disabled]="timeLimit === 0" type="button" class="btn btn-info btn-lg answer-btn">
+            This is answer B. It may be quite long answer, why not.
+          </button>
+          <button [disabled]="timeLimit === 0" type="button" class="btn btn-warning btn-lg answer-btn">This is answer C.</button>
+          <button [disabled]="timeLimit === 0" type="button" class="btn btn-danger btn-lg answer-btn">
+            This is answer D. It may be quite long answer, why not.
+          </button>
         </div>
       </div>
     </div>
