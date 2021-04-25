@@ -32,11 +32,11 @@ public class QuestionAnswer implements Serializable {
     private AnswerCode answer;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "questionAnswers", "questionCategory", "quizzes" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questionAnswers", "questionCategory", "createdBy", "quizzes" }, allowSetters = true)
     private Question question;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "quizResults" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "questions", "quizResults", "invitations" }, allowSetters = true)
     private UserAccount participant;
 
     @ManyToOne

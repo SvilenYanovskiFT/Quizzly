@@ -63,6 +63,10 @@ public class CacheConfiguration {
             createCache(cm, com.quizzly.domain.QuizResult.class.getName() + ".questionAnswers");
             createCache(cm, com.quizzly.domain.QuestionCategory.class.getName());
             createCache(cm, com.quizzly.domain.QuestionCategory.class.getName() + ".categories");
+            createCache(cm, com.quizzly.domain.UserAccount.class.getName() + ".questions");
+            createCache(cm, com.quizzly.domain.UserAccount.class.getName() + ".invitations");
+            createCache(cm, com.quizzly.domain.Invitation.class.getName());
+            createCache(cm, com.quizzly.domain.Invitation.class.getName() + ".userAccounts");
             // jhipster-needle-ehcache-add-entry
         };
     }

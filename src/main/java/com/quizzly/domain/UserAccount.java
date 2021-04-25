@@ -45,10 +45,20 @@ public class UserAccount implements Serializable {
     @JsonIgnoreProperties(value = { "quizResults", "questions", "owner" }, allowSetters = true)
     private Set<Quiz> quizzes = new HashSet<>();
 
+    @OneToMany(mappedBy = "createdBy")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "questionAnswers", "questionCategory", "createdBy", "quizzes" }, allowSetters = true)
+    private Set<Question> questions = new HashSet<>();
+
     @OneToMany(mappedBy = "quizResult")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "questionAnswers", "quiz", "quizResult" }, allowSetters = true)
     private Set<QuizResult> quizResults = new HashSet<>();
+
+    @ManyToMany(mappedBy = "userAccounts")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "userAccounts" }, allowSetters = true)
+    private Set<Invitation> invitations = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -178,6 +188,37 @@ public class UserAccount implements Serializable {
         this.quizzes = quizzes;
     }
 
+    public Set<Question> getQuestions() {
+        return this.questions;
+    }
+
+    public UserAccount questions(Set<Question> questions) {
+        this.setQuestions(questions);
+        return this;
+    }
+
+    public UserAccount addQuestion(Question question) {
+        this.questions.add(question);
+        question.setCreatedBy(this);
+        return this;
+    }
+
+    public UserAccount removeQuestion(Question question) {
+        this.questions.remove(question);
+        question.setCreatedBy(null);
+        return this;
+    }
+
+    public void setQuestions(Set<Question> questions) {
+        if (this.questions != null) {
+            this.questions.forEach(i -> i.setCreatedBy(null));
+        }
+        if (questions != null) {
+            questions.forEach(i -> i.setCreatedBy(this));
+        }
+        this.questions = questions;
+    }
+
     public Set<QuizResult> getQuizResults() {
         return this.quizResults;
     }
@@ -207,6 +248,37 @@ public class UserAccount implements Serializable {
             quizResults.forEach(i -> i.setQuizResult(this));
         }
         this.quizResults = quizResults;
+    }
+
+    public Set<Invitation> getInvitations() {
+        return this.invitations;
+    }
+
+    public UserAccount invitations(Set<Invitation> invitations) {
+        this.setInvitations(invitations);
+        return this;
+    }
+
+    public UserAccount addInvitation(Invitation invitation) {
+        this.invitations.add(invitation);
+        invitation.getUserAccounts().add(this);
+        return this;
+    }
+
+    public UserAccount removeInvitation(Invitation invitation) {
+        this.invitations.remove(invitation);
+        invitation.getUserAccounts().remove(this);
+        return this;
+    }
+
+    public void setInvitations(Set<Invitation> invitations) {
+        if (this.invitations != null) {
+            this.invitations.forEach(i -> i.removeUserAccount(this));
+        }
+        if (invitations != null) {
+            invitations.forEach(i -> i.addUserAccount(this));
+        }
+        this.invitations = invitations;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

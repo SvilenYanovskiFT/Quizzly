@@ -2,7 +2,7 @@
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
     <!--    <span class="logo-img"></span>-->
     <span class="navbar-title">Quizzly</span>
-    <span class="navbar-version">{{ version }}</span>
+    <!--    <span class="navbar-version">{{ version }}</span>-->
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -28,7 +28,7 @@
       </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
-        *ngSwitchCase="true"
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
@@ -112,6 +112,18 @@
             >
               <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
               <span>Question Category</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="invitation"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Invitation</span>
             </a>
           </li>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->

@@ -1,1 +1,23 @@
-<div class="row">Welcome {{ account?.login }}!</div>
+<section class="home">
+  <div class="bg-video">
+    <video class="bg-video__content" autoplay muted loop>
+      <source src="../../content/images/video.mp4" type="video/mp4" />
+      <source src="../../content/images/video.webm" type="video/webm" />
+      Your browser is not supported!
+    </video>
+  </div>
+
+  <div class="jumbotron bg">
+    <h1 class="display-4 center-text">Welcome to QUIZZLY {{ account?.login }} ;)</h1>
+    <p class="lead center-text">The bestest ever quiz app in the worlds, really!</p>
+    <hr class="my-4" />
+    <h4 *ngIf="!account?.login" class="card-text center-text">
+      Please login and you will be able to create and participate the best quizes ever, we promise!!!
+    </h4>
+    <h4 *ngIf="account?.login" class="card-text center-text mb-3">Join active quiz now! Enter the quiz code bellow:</h4>
+    <div *ngIf="account?.login" class="center">
+      <input class="mx-3" [(ngModel)]="code" />
+      <button type="button" class="btn btn-primary btn-sm" (click)="joinQuiz()">Join!!!</button>
+    </div>
+  </div>
+</section>

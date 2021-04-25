@@ -65,10 +65,10 @@ describe('Component Tests', () => {
 
       it('Should call UserAccount query and add missing value', () => {
         const quiz: IQuiz = { id: 456 };
-        const owner: IUserAccount = { id: 52438 };
+        const owner: IUserAccount = { id: 99914 };
         quiz.owner = owner;
 
-        const userAccountCollection: IUserAccount[] = [{ id: 49531 }];
+        const userAccountCollection: IUserAccount[] = [{ id: 10669 }];
         spyOn(userAccountService, 'query').and.returnValue(of(new HttpResponse({ body: userAccountCollection })));
         const additionalUserAccounts = [owner];
         const expectedCollection: IUserAccount[] = [...additionalUserAccounts, ...userAccountCollection];
@@ -89,7 +89,7 @@ describe('Component Tests', () => {
         const quiz: IQuiz = { id: 456 };
         const questions: IQuestion = { id: 52389 };
         quiz.questions = [questions];
-        const owner: IUserAccount = { id: 13969 };
+        const owner: IUserAccount = { id: 88136 };
         quiz.owner = owner;
 
         activatedRoute.data = of({ quiz });

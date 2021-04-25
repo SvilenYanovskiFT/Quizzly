@@ -45,11 +45,11 @@ public class Quiz implements Serializable {
         joinColumns = @JoinColumn(name = "quiz_id"),
         inverseJoinColumns = @JoinColumn(name = "question_id")
     )
-    @JsonIgnoreProperties(value = { "questionAnswers", "questionCategory", "quizzes" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questionAnswers", "questionCategory", "createdBy", "quizzes" }, allowSetters = true)
     private Set<Question> questions = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "quizResults" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "questions", "quizResults", "invitations" }, allowSetters = true)
     private UserAccount owner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

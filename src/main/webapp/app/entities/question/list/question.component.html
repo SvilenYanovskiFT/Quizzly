@@ -43,6 +43,7 @@
           <th scope="col"><span>Correct Answer</span></th>
           <th scope="col"><span>Time Limit</span></th>
           <th scope="col"><span>Question Category</span></th>
+          <th scope="col"><span>Created By</span></th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -63,6 +64,11 @@
           <td>
             <div *ngIf="question.questionCategory">
               <a [routerLink]="['/question-category', question.questionCategory?.id, 'view']">{{ question.questionCategory?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="question.createdBy">
+              <a [routerLink]="['/user-account', question.createdBy?.id, 'view']">{{ question.createdBy?.id }}</a>
             </div>
           </td>
           <td class="text-right">

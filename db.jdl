@@ -46,18 +46,25 @@ entity QuestionCategory {
 	name String
 }
 
+entity Invitation {
+	quizCode String,
+    invitedBy String
+}
+
 relationship OneToMany {
     Question to QuestionAnswer{question},
     QuestionCategory{category} to Question,
     UserAccount to QuestionAnswer{participant},
     UserAccount to Quiz{owner},
+    UserAccount to Question{createdBy},
     Quiz to QuizResult{quiz},
     QuizResult to QuestionAnswer{rezult},
     UserAccount to QuizResult{quizResult}
 }
 
 relationship ManyToMany {
-	Quiz to Question
+	Quiz to Question,
+    Invitation to UserAccount
 }
 
 relationship OneToOne {

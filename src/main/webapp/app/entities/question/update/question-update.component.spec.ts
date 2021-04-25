@@ -11,6 +11,8 @@ import { QuestionService } from '../service/question.service';
 import { IQuestion, Question } from '../question.model';
 import { IQuestionCategory } from 'app/entities/question-category/question-category.model';
 import { QuestionCategoryService } from 'app/entities/question-category/service/question-category.service';
+import { IUserAccount } from 'app/entities/user-account/user-account.model';
+import { UserAccountService } from 'app/entities/user-account/service/user-account.service';
 
 import { QuestionUpdateComponent } from './question-update.component';
 
@@ -21,6 +23,7 @@ describe('Component Tests', () => {
     let activatedRoute: ActivatedRoute;
     let questionService: QuestionService;
     let questionCategoryService: QuestionCategoryService;
+    let userAccountService: UserAccountService;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -35,6 +38,7 @@ describe('Component Tests', () => {
       activatedRoute = TestBed.inject(ActivatedRoute);
       questionService = TestBed.inject(QuestionService);
       questionCategoryService = TestBed.inject(QuestionCategoryService);
+      userAccountService = TestBed.inject(UserAccountService);
 
       comp = fixture.componentInstance;
     });
@@ -62,16 +66,41 @@ describe('Component Tests', () => {
         expect(comp.questionCategoriesSharedCollection).toEqual(expectedCollection);
       });
 
+      it('Should call UserAccount query and add missing value', () => {
+        const question: IQuestion = { id: 456 };
+        const createdBy: IUserAccount = { id: 52438 };
+        question.createdBy = createdBy;
+
+        const userAccountCollection: IUserAccount[] = [{ id: 49531 }];
+        spyOn(userAccountService, 'query').and.returnValue(of(new HttpResponse({ body: userAccountCollection })));
+        const additionalUserAccounts = [createdBy];
+        const expectedCollection: IUserAccount[] = [...additionalUserAccounts, ...userAccountCollection];
+        spyOn(userAccountService, 'addUserAccountToCollectionIfMissing').and.returnValue(expectedCollection);
+
+        activatedRoute.data = of({ question });
+        comp.ngOnInit();
+
+        expect(userAccountService.query).toHaveBeenCalled();
+        expect(userAccountService.addUserAccountToCollectionIfMissing).toHaveBeenCalledWith(
+          userAccountCollection,
+          ...additionalUserAccounts
+        );
+        expect(comp.userAccountsSharedCollection).toEqual(expectedCollection);
+      });
+
       it('Should update editForm', () => {
         const question: IQuestion = { id: 456 };
         const questionCategory: IQuestionCategory = { id: 92981 };
         question.questionCategory = questionCategory;
+        const createdBy: IUserAccount = { id: 13969 };
+        question.createdBy = createdBy;
 
         activatedRoute.data = of({ question });
         comp.ngOnInit();
 
         expect(comp.editForm.value).toEqual(expect.objectContaining(question));
         expect(comp.questionCategoriesSharedCollection).toContain(questionCategory);
+        expect(comp.userAccountsSharedCollection).toContain(createdBy);
       });
     });
 
@@ -144,6 +173,14 @@ describe('Component Tests', () => {
         it('Should return tracked QuestionCategory primary key', () => {
           const entity = { id: 123 };
           const trackResult = comp.trackQuestionCategoryById(0, entity);
+          expect(trackResult).toEqual(entity.id);
+        });
+      });
+
+      describe('trackUserAccountById', () => {
+        it('Should return tracked UserAccount primary key', () => {
+          const entity = { id: 123 };
+          const trackResult = comp.trackUserAccountById(0, entity);
           expect(trackResult).toEqual(entity.id);
         });
       });

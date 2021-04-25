@@ -53,6 +53,12 @@
       "relationshipName": "questionCategory"
     },
     {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "question",
+      "relationshipName": "createdBy"
+    },
+    {
       "relationshipType": "many-to-many",
       "otherEntityName": "quiz",
       "otherEntityRelationshipName": "question",

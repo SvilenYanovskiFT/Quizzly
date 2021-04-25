@@ -42,7 +42,7 @@
     "jwtSecretKey": "ZGVmYzZkYjIxNzUzMmI4MDViODViMDgzZmYzNTI0NjQ3MWUzZDU4ODNhZmY2NGRiZGRmODQ5MTlkMDQzZDc3ZTk4YWI4NGRlOTE2M2M5NmZjMmY2NmQ0ZjcxZGQyYTg0OTU3NTdjZDlhZmM3OTI2NTgyOWQ0NDg3OWFmY2UyMjM=",
     "clientPackageManager": "npm",
     "languages": ["en", "fr"],
-    "entities": ["Question", "Quiz", "UserAccount", "QuestionAnswer", "QuizResult", "QuestionCategory"],
-    "lastLiquibaseTimestamp": 1619251751000
+    "entities": ["Question", "Quiz", "UserAccount", "QuestionAnswer", "QuizResult", "QuestionCategory", "Invitation"],
+    "lastLiquibaseTimestamp": 1619355727000
   }
 }

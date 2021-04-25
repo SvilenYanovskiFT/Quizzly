@@ -13,6 +13,7 @@ import { Account } from 'app/core/auth/account.model';
 export class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null;
   authSubscription?: Subscription;
+  code!: string;
 
   constructor(private accountService: AccountService, private router: Router) {}
 
@@ -32,5 +33,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.authSubscription.unsubscribe();
     }
+  }
+
+  joinQuiz(): void {
+    console.log(this.code);
   }
 }

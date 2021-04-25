@@ -1,5 +1,6 @@
 import { IQuestionAnswer } from 'app/entities/question-answer/question-answer.model';
 import { IQuestionCategory } from 'app/entities/question-category/question-category.model';
+import { IUserAccount } from 'app/entities/user-account/user-account.model';
 import { IQuiz } from 'app/entities/quiz/quiz.model';
 import { AnswerCode } from 'app/entities/enumerations/answer-code.model';
 
@@ -16,6 +17,7 @@ export interface IQuestion {
   timeLimit?: number | null;
   questionAnswers?: IQuestionAnswer[] | null;
   questionCategory?: IQuestionCategory | null;
+  createdBy?: IUserAccount | null;
   quizzes?: IQuiz[] | null;
 }
 
@@ -33,6 +35,7 @@ export class Question implements IQuestion {
     public timeLimit?: number | null,
     public questionAnswers?: IQuestionAnswer[] | null,
     public questionCategory?: IQuestionCategory | null,
+    public createdBy?: IUserAccount | null,
     public quizzes?: IQuiz[] | null
   ) {}
 }

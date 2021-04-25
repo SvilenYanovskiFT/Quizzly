@@ -38,7 +38,7 @@ public class QuizResult implements Serializable {
     private Quiz quiz;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "quizResults" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "questions", "quizResults", "invitations" }, allowSetters = true)
     private UserAccount quizResult;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

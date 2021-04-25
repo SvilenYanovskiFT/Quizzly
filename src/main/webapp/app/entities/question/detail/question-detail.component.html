@@ -56,6 +56,12 @@
             <a [routerLink]="['/question-category', question.questionCategory?.id, 'view']">{{ question.questionCategory?.id }}</a>
           </div>
         </dd>
+        <dt><span>Created By</span></dt>
+        <dd>
+          <div *ngIf="question.createdBy">
+            <a [routerLink]="['/user-account', question.createdBy?.id, 'view']">{{ question.createdBy?.id }}</a>
+          </div>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

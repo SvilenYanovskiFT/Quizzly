@@ -31,6 +31,8 @@ public class QuestionDTO implements Serializable {
 
     private QuestionCategoryDTO questionCategory;
 
+    private UserAccountDTO createdBy;
+
     public Long getId() {
         return id;
     }
@@ -119,6 +121,14 @@ public class QuestionDTO implements Serializable {
         this.questionCategory = questionCategory;
     }
 
+    public UserAccountDTO getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UserAccountDTO createdBy) {
+        this.createdBy = createdBy;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -155,6 +165,7 @@ public class QuestionDTO implements Serializable {
             ", correctAnswer='" + getCorrectAnswer() + "'" +
             ", timeLimit=" + getTimeLimit() +
             ", questionCategory=" + getQuestionCategory() +
+            ", createdBy=" + getCreatedBy() +
             "}";
     }
 }

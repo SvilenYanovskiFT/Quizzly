@@ -9,6 +9,8 @@ import { IQuestion, Question } from '../question.model';
 import { QuestionService } from '../service/question.service';
 import { IQuestionCategory } from 'app/entities/question-category/question-category.model';
 import { QuestionCategoryService } from 'app/entities/question-category/service/question-category.service';
+import { IUserAccount } from 'app/entities/user-account/user-account.model';
+import { UserAccountService } from 'app/entities/user-account/service/user-account.service';
 
 @Component({
   selector: 'jhi-question-update',
@@ -18,6 +20,7 @@ export class QuestionUpdateComponent implements OnInit {
   isSaving = false;
 
   questionCategoriesSharedCollection: IQuestionCategory[] = [];
+  userAccountsSharedCollection: IUserAccount[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -31,11 +34,13 @@ export class QuestionUpdateComponent implements OnInit {
     correctAnswer: [],
     timeLimit: [],
     questionCategory: [],
+    createdBy: [],
   });
 
   constructor(
     protected questionService: QuestionService,
     protected questionCategoryService: QuestionCategoryService,
+    protected userAccountService: UserAccountService,
     protected activatedRoute: ActivatedRoute,
     protected fb: FormBuilder
   ) {}
@@ -63,6 +68,10 @@ export class QuestionUpdateComponent implements OnInit {
   }
 
   trackQuestionCategoryById(index: number, item: IQuestionCategory): number {
+    return item.id!;
+  }
+
+  trackUserAccountById(index: number, item: IUserAccount): number {
     return item.id!;
   }
 
@@ -98,11 +107,16 @@ export class QuestionUpdateComponent implements OnInit {
       correctAnswer: question.correctAnswer,
       timeLimit: question.timeLimit,
       questionCategory: question.questionCategory,
+      createdBy: question.createdBy,
     });
 
     this.questionCategoriesSharedCollection = this.questionCategoryService.addQuestionCategoryToCollectionIfMissing(
       this.questionCategoriesSharedCollection,
       question.questionCategory
+    );
+    this.userAccountsSharedCollection = this.userAccountService.addUserAccountToCollectionIfMissing(
+      this.userAccountsSharedCollection,
+      question.createdBy
     );
   }
 
@@ -119,6 +133,16 @@ export class QuestionUpdateComponent implements OnInit {
         )
       )
       .subscribe((questionCategories: IQuestionCategory[]) => (this.questionCategoriesSharedCollection = questionCategories));
+
+    this.userAccountService
+      .query()
+      .pipe(map((res: HttpResponse<IUserAccount[]>) => res.body ?? []))
+      .pipe(
+        map((userAccounts: IUserAccount[]) =>
+          this.userAccountService.addUserAccountToCollectionIfMissing(userAccounts, this.editForm.get('createdBy')!.value)
+        )
+      )
+      .subscribe((userAccounts: IUserAccount[]) => (this.userAccountsSharedCollection = userAccounts));
   }
 
   protected createFromForm(): IQuestion {
@@ -135,6 +159,7 @@ export class QuestionUpdateComponent implements OnInit {
       correctAnswer: this.editForm.get(['correctAnswer'])!.value,
       timeLimit: this.editForm.get(['timeLimit'])!.value,
       questionCategory: this.editForm.get(['questionCategory'])!.value,
+      createdBy: this.editForm.get(['createdBy'])!.value,
     };
   }
 }

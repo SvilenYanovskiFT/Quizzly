@@ -2,6 +2,7 @@ package com.quizzly.service.mapper;
 
 import com.quizzly.domain.*;
 import com.quizzly.service.dto.UserAccountDTO;
+import java.util.Set;
 import org.mapstruct.*;
 
 /**
@@ -16,4 +17,9 @@ public interface UserAccountMapper extends EntityMapper<UserAccountDTO, UserAcco
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     UserAccountDTO toDtoId(UserAccount userAccount);
+
+    @Named("idSet")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    Set<UserAccountDTO> toDtoIdSet(Set<UserAccount> userAccount);
 }

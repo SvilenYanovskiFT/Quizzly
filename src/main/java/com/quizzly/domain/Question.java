@@ -60,6 +60,10 @@ public class Question implements Serializable {
     @JsonIgnoreProperties(value = { "categories" }, allowSetters = true)
     private QuestionCategory questionCategory;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "user", "questionAnswers", "quizzes", "questions", "quizResults", "invitations" }, allowSetters = true)
+    private UserAccount createdBy;
+
     @ManyToMany(mappedBy = "questions")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "quizResults", "questions", "owner" }, allowSetters = true)
@@ -238,6 +242,19 @@ public class Question implements Serializable {
 
     public void setQuestionCategory(QuestionCategory questionCategory) {
         this.questionCategory = questionCategory;
+    }
+
+    public UserAccount getCreatedBy() {
+        return this.createdBy;
+    }
+
+    public Question createdBy(UserAccount userAccount) {
+        this.setCreatedBy(userAccount);
+        return this;
+    }
+
+    public void setCreatedBy(UserAccount userAccount) {
+        this.createdBy = userAccount;
     }
 
     public Set<Quiz> getQuizzes() {

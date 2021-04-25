@@ -37,9 +37,22 @@
     },
     {
       "relationshipType": "one-to-many",
+      "otherEntityName": "question",
+      "otherEntityRelationshipName": "createdBy",
+      "relationshipName": "question"
+    },
+    {
+      "relationshipType": "one-to-many",
       "otherEntityName": "quizResult",
       "otherEntityRelationshipName": "quizResult",
       "relationshipName": "quizResult"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "invitation",
+      "otherEntityRelationshipName": "userAccount",
+      "relationshipName": "invitation",
+      "ownerSide": false
     }
   ],
   "entityTableName": "user_account",
