@@ -1,0 +1,43 @@
+{
+  "name": "QuizResult",
+  "fields": [
+    {
+      "fieldName": "score",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "rank",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "questionAnswer",
+      "otherEntityRelationshipName": "rezult",
+      "relationshipName": "questionAnswer"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "quiz",
+      "otherEntityRelationshipName": "quizResult",
+      "relationshipName": "quiz"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "quizResult",
+      "relationshipName": "quizResult"
+    }
+  ],
+  "entityTableName": "quiz_result",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210425132124"
+}

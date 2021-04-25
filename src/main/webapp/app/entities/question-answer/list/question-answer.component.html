@@ -1,0 +1,100 @@
+<div>
+  <h2 id="page-heading" data-cy="QuestionAnswerHeading">
+    <span>Question Answers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-question-answer"
+        [routerLink]="['/question-answer/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Question Answer </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="questionAnswers?.length === 0">
+    <span>No questionAnswers found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="questionAnswers && questionAnswers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>ID</span></th>
+          <th scope="col"><span>Time Taken</span></th>
+          <th scope="col"><span>Success</span></th>
+          <th scope="col"><span>Answer</span></th>
+          <th scope="col"><span>Question</span></th>
+          <th scope="col"><span>Participant</span></th>
+          <th scope="col"><span>Rezult</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let questionAnswer of questionAnswers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/question-answer', questionAnswer.id, 'view']">{{ questionAnswer.id }}</a>
+          </td>
+          <td>{{ questionAnswer.timeTaken }}</td>
+          <td>{{ questionAnswer.success }}</td>
+          <td>{{ questionAnswer.answer }}</td>
+          <td>
+            <div *ngIf="questionAnswer.question">
+              <a [routerLink]="['/question', questionAnswer.question?.id, 'view']">{{ questionAnswer.question?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="questionAnswer.participant">
+              <a [routerLink]="['/user-account', questionAnswer.participant?.id, 'view']">{{ questionAnswer.participant?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="questionAnswer.rezult">
+              <a [routerLink]="['/quiz-result', questionAnswer.rezult?.id, 'view']">{{ questionAnswer.rezult?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/question-answer', questionAnswer.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/question-answer', questionAnswer.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(questionAnswer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

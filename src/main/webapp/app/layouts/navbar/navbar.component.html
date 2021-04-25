@@ -1,8 +1,6 @@
 <nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-primary">
   <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-    <!--    <span class="logo-img"></span>-->
     <span class="navbar-title">Quizzly</span>
-    <span class="navbar-version">{{ version }}</span>
   </a>
   <a
     class="navbar-toggler d-lg-none"
@@ -26,9 +24,33 @@
           </span>
         </a>
       </li>
+      <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="my-dashboard" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="th-list"></fa-icon>
+            <span>Dashboard</span>
+          </span>
+        </a>
+      </li>
+      <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="my-questions" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="th-list"></fa-icon>
+            <span>My Questions</span>
+          </span>
+        </a>
+      </li>
+      <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="my-quizzes" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="th-list"></fa-icon>
+            <span>My Quizzes</span>
+          </span>
+        </a>
+      </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
-        *ngSwitchCase="true"
+        *jhiHasAnyAuthority="'ROLE_ADMIN'"
         ngbDropdown
         class="nav-item dropdown pointer"
         display="dynamic"
@@ -42,6 +64,90 @@
           </span>
         </a>
         <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="question"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Question</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="quiz"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Quiz</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="user-account"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>User Account</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="question-answer"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Question Answer</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="quiz-result"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Quiz Result</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="question-category"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Question Category</span>
+            </a>
+          </li>
+          <li>
+            <a
+              class="dropdown-item"
+              routerLink="invitation"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="collapseNavbar()"
+            >
+              <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+              <span>Invitation</span>
+            </a>
+          </li>
           <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
         </ul>
       </li>

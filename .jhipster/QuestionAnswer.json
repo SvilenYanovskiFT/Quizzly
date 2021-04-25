@@ -1,0 +1,48 @@
+{
+  "name": "QuestionAnswer",
+  "fields": [
+    {
+      "fieldName": "timeTaken",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "success",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "answer",
+      "fieldType": "AnswerCode",
+      "fieldValues": "A,B,C,D"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "question",
+      "otherEntityRelationshipName": "questionAnswer",
+      "relationshipName": "question"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "userAccount",
+      "otherEntityRelationshipName": "questionAnswer",
+      "relationshipName": "participant"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "quizResult",
+      "otherEntityRelationshipName": "questionAnswer",
+      "relationshipName": "rezult"
+    }
+  ],
+  "entityTableName": "question_answer",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210425132123"
+}

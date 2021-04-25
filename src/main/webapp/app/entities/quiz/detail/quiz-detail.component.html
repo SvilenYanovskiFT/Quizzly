@@ -1,0 +1,53 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="quiz">
+      <h2 data-cy="quizDetailsHeading"><span>Quiz</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ quiz.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ quiz.name }}</span>
+        </dd>
+        <dt><span>Code</span></dt>
+        <dd>
+          <span>{{ quiz.code }}</span>
+        </dd>
+        <dt><span>Quiz Type</span></dt>
+        <dd>
+          <span>{{ quiz.quizType }}</span>
+        </dd>
+        <dt><span>Question</span></dt>
+        <dd>
+          <span *ngFor="let question of quiz.questions; let last = last">
+            <a [routerLink]="['/question', question?.id, 'view']">{{ question.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span>Owner</span></dt>
+        <dd>
+          <div *ngIf="quiz.owner">
+            <a [routerLink]="['/user-account', quiz.owner?.id, 'view']">{{ quiz.owner?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/quiz', quiz.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
