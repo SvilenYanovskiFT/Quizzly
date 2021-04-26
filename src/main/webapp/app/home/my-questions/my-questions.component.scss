@@ -1,0 +1,19 @@
+.banner {
+  max-width: 1220px;
+  min-width: 610px;
+  max-height: 230px;
+}
+
+.correct {
+  color: green;
+  font-weight: bold;
+}
+
+.cell {
+  min-width: 150px;
+}
+
+.create-form {
+  height: 60vh;
+  overflow-y: auto;
+}

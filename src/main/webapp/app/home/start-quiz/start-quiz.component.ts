@@ -30,4 +30,8 @@ export class StartQuizComponent implements OnInit {
       }
     }, 1000);
   }
+
+  pauseTimer(): void {
+    clearInterval(this.interval);
+  }
 }

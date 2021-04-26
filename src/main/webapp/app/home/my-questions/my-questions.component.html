@@ -9,13 +9,231 @@
 
   <div class="row">
     <div class="centered">
-      <div class="jumbotron wide">
+      <div class="jumbotron banner">
         <h4 class="display-5">Here you can forge your questions, champion!</h4>
         <p class="lead">Remember, the excellence is in the balance - not too hard, but not too happy either!</p>
         <hr class="my-4" />
         <p>Don't hesitate, create your own quiz and start adding questions.</p>
-        <button type="button" class="btn btn-primary">Create Question</button>
-        <button type="button" class="btn btn-primary">Create Category</button>
+      </div>
+    </div>
+
+    <div class="centered">
+      <div class="row">
+        <div class="col-xl-4">
+          <div class="card border-primary mb-3 create-form">
+            <h4 class="card-header">Create New Question:</h4>
+            <div class="card-body">
+              <div class="row justify-content-center">
+                <div class="col-12">
+                  <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                    <h2 id="jhi-question-heading" data-cy="QuestionCreateUpdateHeading">Create or edit a Question</h2>
+
+                    <div>
+                      <jhi-alert-error></jhi-alert-error>
+
+                      <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+                        <label class="form-control-label" for="field_id">ID</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          name="id"
+                          id="field_id"
+                          data-cy="id"
+                          formControlName="id"
+                          [readonly]="true"
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_sortOrder">Sort Order</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          name="sortOrder"
+                          id="field_sortOrder"
+                          data-cy="sortOrder"
+                          formControlName="sortOrder"
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_text">Text</label>
+                        <input type="text" class="form-control" name="text" id="field_text" data-cy="text" formControlName="text" />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_image">Image</label>
+                        <input type="text" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_answerA">Answer A</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="answerA"
+                          id="field_answerA"
+                          data-cy="answerA"
+                          formControlName="answerA"
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_answerB">Answer B</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="answerB"
+                          id="field_answerB"
+                          data-cy="answerB"
+                          formControlName="answerB"
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_answerC">Answer C</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="answerC"
+                          id="field_answerC"
+                          data-cy="answerC"
+                          formControlName="answerC"
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_answerD">Answer D</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="answerD"
+                          id="field_answerD"
+                          data-cy="answerD"
+                          formControlName="answerD"
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_correctAnswer">Correct Answer</label>
+                        <select
+                          class="form-control"
+                          name="correctAnswer"
+                          formControlName="correctAnswer"
+                          id="field_correctAnswer"
+                          data-cy="correctAnswer"
+                        >
+                          <option [ngValue]="null"></option>
+                          <option value="A">A</option>
+                          <option value="B">B</option>
+                          <option value="C">C</option>
+                          <option value="D">D</option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_timeLimit">Time Limit</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          name="timeLimit"
+                          id="field_timeLimit"
+                          data-cy="timeLimit"
+                          formControlName="timeLimit"
+                        />
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_questionCategory">Question Category</label>
+                        <select
+                          class="form-control"
+                          id="field_questionCategory"
+                          data-cy="questionCategory"
+                          name="questionCategory"
+                          formControlName="questionCategory"
+                        >
+                          <option [ngValue]="null"></option>
+                          <option
+                            [ngValue]="
+                              questionCategoryOption.id === editForm.get('questionCategory')!.value?.id
+                                ? editForm.get('questionCategory')!.value
+                                : questionCategoryOption
+                            "
+                            *ngFor="let questionCategoryOption of questionCategoriesSharedCollection"
+                          >
+                            {{ questionCategoryOption.id }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="form-control-label" for="field_createdBy">Created By</label>
+                        <select class="form-control" id="field_createdBy" data-cy="createdBy" name="createdBy" formControlName="createdBy">
+                          <option [ngValue]="null"></option>
+                          <option
+                            [ngValue]="
+                              userAccountOption.id === editForm.get('createdBy')!.value?.id
+                                ? editForm.get('createdBy')!.value
+                                : userAccountOption
+                            "
+                            *ngFor="let userAccountOption of userAccountsSharedCollection"
+                          >
+                            {{ userAccountOption.id }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                        <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                      </button>
+
+                      <button
+                        type="submit"
+                        id="save-entity"
+                        data-cy="entityCreateSaveButton"
+                        [disabled]="editForm.invalid || isSaving"
+                        class="btn btn-primary"
+                      >
+                        <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8">
+          <div class="card border-primary mb-3">
+            <h4 class="card-header">Your Questions:</h4>
+            <div class="card-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Question</th>
+                    <th scope="col">Answer A</th>
+                    <th scope="col">Answer B</th>
+                    <th scope="col">Answer C</th>
+                    <th scope="col">Answer D</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let q of myQuestions; let i = index">
+                    <tr [ngClass]="i % 2 === 0 ? 'table-info' : 'table-warning'">
+                      <td class="cell">{{ q.question }}</td>
+                      <td [ngClass]="q.correct === 'a' ? 'correct' : ''" class="cell">{{ q.a }}</td>
+                      <td [ngClass]="q.correct === 'b' ? 'correct' : ''" class="cell">{{ q.b }}</td>
+                      <td [ngClass]="q.correct === 'c' ? 'correct' : ''" class="cell">{{ q.c }}</td>
+                      <td [ngClass]="q.correct === 'd' ? 'correct' : ''" class="cell">{{ q.d }}</td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

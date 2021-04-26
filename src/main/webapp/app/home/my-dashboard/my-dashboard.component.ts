@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuizService } from 'app/entities/quiz/service/quiz.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-my-dashboard',
@@ -10,7 +11,7 @@ export class MyDashboardComponent implements OnInit {
   quizzesTaken: any;
   topPlayers: any;
   invitations: any;
-  constructor(protected quizService: QuizService) {}
+  constructor(protected quizService: QuizService, protected router: Router) {}
 
   ngOnInit(): void {
     this.quizzesTaken = [
@@ -48,5 +49,13 @@ export class MyDashboardComponent implements OnInit {
       { invBy: 'pepa.pepova@xoomworks.com', code: 'GH44', response: 'accepted', score: 54 },
       { invBy: 'gosho.goshev@xoomworks.com', code: 'SD43', response: 'rejected', score: '' },
     ];
+  }
+
+  goToQuestions(): void {
+    this.router.navigate(['my-questions']);
+  }
+
+  goToQuizzes(): void {
+    this.router.navigate(['my-quizzes']);
   }
 }

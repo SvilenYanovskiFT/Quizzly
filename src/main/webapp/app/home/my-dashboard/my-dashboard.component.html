@@ -14,8 +14,10 @@
         <p class="lead">Remember, the excellence comes with practice. Do more quizzes!</p>
         <hr class="my-4" />
         <p>Don't hesitate, create your own quiz and start adding questions.</p>
-        <button type="button" class="btn btn-primary">Create Question</button>
-        <button type="button" class="btn btn-primary">Create Quiz</button>
+        <div class="lead">
+          <button type="button" class="btn btn-primary" (click)="goToQuestions()">Create Question</button>
+          <button type="button" class="btn btn-primary" (click)="goToQuizzes()">Create Quiz</button>
+        </div>
       </div>
     </div>
 
